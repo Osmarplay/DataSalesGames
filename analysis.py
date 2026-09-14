@@ -54,3 +54,37 @@ def publisher_most_sold(games):
     ventas_totales = publishers_sales[publisher_most_sales]
     
     return publisher_most_sales, ventas_totales
+
+#Esta funcion solo ayuda a conseguir las primerass tres palabras de un juego 
+def get_base_name(name):
+    nombre_limpio = name.replace(":", "").replace(",", "")
+    separados = nombre_limpio.split()
+    palabras_3 = separados[0:3]
+    nombre_base = " ".join(palabras_3)
+    return nombre_base
+
+
+def game_with_sequels(games):
+    base_name = {}
+    sequels_games = {}
+    nombres_vistos = set()
+    juegos_unicos = []
+    
+    for game in games:
+        if game.name not in nombres_vistos:
+            nombres_vistos.add(game.name)
+            juegos_unicos.append(game)
+    
+    
+    for game in juegos_unicos:
+        base = get_base_name(game.name)
+        if base not in base_name:
+            base_name[base] = []
+        base_name[base].append(game.name)
+      
+    for base, lista in base_name.items():
+        if len(lista) > 1:
+            sequels_games[base] = lista
+        
+    return sequels_games
+            
